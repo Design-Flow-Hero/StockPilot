@@ -69,3 +69,4 @@ No build step, Node server, or bundler required:
 1. Clone or download the repository.
 2. Open `index.html` in any modern web browser.
 3. Start managing your gadget inventory immediately!
+
