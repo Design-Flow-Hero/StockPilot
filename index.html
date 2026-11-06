@@ -1,0 +1,1601 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>StockPilot – Gadget Inventory Manager</title>
+  <link rel="stylesheet" href="css/main.css">
+</head>
+<body>
+
+  <!-- Toast Notification Container -->
+  <div id="toast-container" class="toast-container"></div>
+
+  <!-- Mobile Sidebar Backdrop Overlay -->
+  <div id="sidebar-overlay" class="sidebar-overlay"></div>
+
+  <div class="app-container">
+    <!-- Sidebar Navigation -->
+    <aside id="sidebar" class="sidebar">
+      <div class="sidebar-header">
+        <a href="#dashboard" class="brand" data-tab="dashboard">
+          <div class="brand-icon">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+              <rect x="2" y="3" width="20" height="14" rx="2" ry="2"/>
+              <line x1="8" y1="21" x2="16" y2="21"/>
+              <line x1="12" y1="17" x2="12" y2="21"/>
+            </svg>
+          </div>
+          <div class="brand-info">
+            <span class="brand-title">StockPilot</span>
+            <span class="brand-badge">Gadget Hub</span>
+          </div>
+        </a>
+      </div>
+
+      <nav class="sidebar-nav">
+        <div class="nav-section-title">Overview</div>
+        <a href="#dashboard" class="nav-item active" data-tab="dashboard">
+          <div class="nav-item-left">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <rect x="3" y="3" width="7" height="7"/>
+              <rect x="14" y="3" width="7" height="7"/>
+              <rect x="14" y="14" width="7" height="7"/>
+              <rect x="3" y="14" width="7" height="7"/>
+            </svg>
+            <span>Dashboard</span>
+          </div>
+        </a>
+
+        <div class="nav-section-title">Inventory & Stock</div>
+        <a href="#inventory" class="nav-item" data-tab="inventory">
+          <div class="nav-item-left">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/>
+              <polyline points="3.27 6.96 12 12.01 20.73 6.96"/>
+              <line x1="12" y1="22.08" x2="12" y2="12"/>
+            </svg>
+            <span>Products</span>
+          </div>
+          <span id="nav-count-products" class="nav-counter">0</span>
+        </a>
+
+        <a href="#stock" class="nav-item" data-tab="stock">
+          <div class="nav-item-left">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/>
+              <polyline points="17 6 23 6 23 12"/>
+            </svg>
+            <span>Stock Tracking</span>
+          </div>
+        </a>
+
+        <a href="#alerts" class="nav-item" data-tab="alerts">
+          <div class="nav-item-left">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/>
+              <line x1="12" y1="9" x2="12" y2="13"/>
+              <line x1="12" y1="17" x2="12.01" y2="17"/>
+            </svg>
+            <span>Restock Alerts</span>
+          </div>
+          <span id="nav-count-alerts" class="nav-counter alert">0</span>
+        </a>
+
+        <div class="nav-section-title">Transactions</div>
+        <a href="#sales" class="nav-item" data-tab="sales">
+          <div class="nav-item-left">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <line x1="12" y1="1" x2="12" y2="23"/>
+              <path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/>
+            </svg>
+            <span>Sales & Receipts</span>
+          </div>
+        </a>
+
+        <div class="nav-section-title">Management</div>
+        <a href="#suppliers" class="nav-item" data-tab="suppliers">
+          <div class="nav-item-left">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/>
+              <circle cx="9" cy="7" r="4"/>
+              <path d="M23 21v-2a4 4 0 0 0-3-3.87"/>
+              <path d="M16 3.13a4 4 0 0 1 0 7.75"/>
+            </svg>
+            <span>Suppliers</span>
+          </div>
+          <span id="nav-count-suppliers" class="nav-counter">0</span>
+        </a>
+
+        <a href="#reports" class="nav-item" data-tab="reports">
+          <div class="nav-item-left">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <line x1="18" y1="20" x2="18" y2="10"/>
+              <line x1="12" y1="20" x2="12" y2="4"/>
+              <line x1="6" y1="20" x2="6" y2="14"/>
+            </svg>
+            <span>Reports & Analytics</span>
+          </div>
+        </a>
+
+        <a href="#settings" class="nav-item" data-tab="settings">
+          <div class="nav-item-left">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="12" cy="12" r="3"/>
+              <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"/>
+            </svg>
+            <span>Settings</span>
+          </div>
+        </a>
+      </nav>
+
+      <div class="sidebar-footer">
+        <div class="store-preview">
+          <div id="sidebar-store-avatar" class="store-avatar">SP</div>
+          <div class="store-meta">
+            <div id="sidebar-store-name" class="store-name-text">StockPilot Hub</div>
+            <div class="store-status-text">
+              <span class="store-status-dot"></span>
+              <span>Inventory Online</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </aside>
+
+    <!-- Main Workspace -->
+    <div class="main-wrapper">
+      <!-- Topbar Header -->
+      <header class="topbar">
+        <div class="topbar-left">
+          <button id="mobile-menu-toggle" class="mobile-menu-btn" title="Toggle Navigation">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <line x1="3" y1="12" x2="21" y2="12"/>
+              <line x1="3" y1="6" x2="21" y2="6"/>
+              <line x1="3" y1="18" x2="21" y2="18"/>
+            </svg>
+          </button>
+          <div class="page-breadcrumb">
+            <span id="breadcrumb-title" class="page-title">Dashboard</span>
+          </div>
+        </div>
+
+        <div class="topbar-right">
+          <!-- Global Quick Search -->
+          <div class="search-bar">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <circle cx="11" cy="11" r="8"/>
+              <line x1="21" y1="21" x2="16.65" y2="16.65"/>
+            </svg>
+            <input type="text" id="global-search-input" placeholder="Quick search gadget, SKU, IMEI...">
+          </div>
+
+          <!-- Quick Action Buttons -->
+          <button id="btn-top-sale" class="btn btn-primary btn-sm">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <line x1="12" y1="1" x2="12" y2="23"/>
+              <path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/>
+            </svg>
+            <span>Record Sale</span>
+          </button>
+          <button id="btn-top-add-product" class="btn btn-secondary btn-sm">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <line x1="12" y1="5" x2="12" y2="19"/>
+              <line x1="5" y1="12" x2="19" y2="12"/>
+            </svg>
+            <span>Add Product</span>
+          </button>
+        </div>
+      </header>
+
+      <!-- Dynamic Content Sections -->
+      <main class="content-body">
+        
+        <!-- SECTION 1: DASHBOARD -->
+        <section id="tab-dashboard" class="tab-section active">
+          <!-- Quick Action Banner -->
+          <div class="quick-actions-bar">
+            <div class="quick-actions-left">
+              <span class="quick-actions-title">Quick Actions:</span>
+              <button class="btn btn-primary btn-sm" id="btn-quick-add-product">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <line x1="12" y1="5" x2="12" y2="19"/>
+                  <line x1="5" y1="12" x2="19" y2="12"/>
+                </svg>
+                <span>Add New Product</span>
+              </button>
+              <button class="btn btn-secondary btn-sm" id="btn-quick-record-sale">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <line x1="12" y1="1" x2="12" y2="23"/>
+                  <path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/>
+                </svg>
+                <span>Record a Sale</span>
+              </button>
+              <button class="btn btn-secondary btn-sm" id="btn-quick-restock">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/>
+                  <polyline points="17 6 23 6 23 12"/>
+                </svg>
+                <span>Restock Inventory</span>
+              </button>
+            </div>
+            <div>
+              <button class="btn btn-secondary btn-sm" id="btn-quick-view-products">
+                <span>View All Products &rarr;</span>
+              </button>
+            </div>
+          </div>
+
+          <!-- Top Statistics Cards -->
+          <div class="stats-grid">
+            <!-- 1. Total Products -->
+            <div class="stat-card">
+              <div class="stat-card-header">
+                <span class="stat-label">Total Products</span>
+                <div class="stat-icon blue">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/>
+                  </svg>
+                </div>
+              </div>
+              <div id="stat-total-products" class="stat-value">0</div>
+              <div class="stat-footer">
+                <span class="stat-tag positive" id="stat-total-brands">0 Brands</span>
+                <span>across categories</span>
+              </div>
+            </div>
+
+            <!-- 2. Total Stock Units -->
+            <div class="stat-card">
+              <div class="stat-card-header">
+                <span class="stat-label">Total Stock Units</span>
+                <div class="stat-icon green">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <polyline points="22 12 16 12 14 15 10 15 8 12 2 12"/>
+                    <path d="M5.45 5.11L2 12v6a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-6l-3.45-6.89A2 2 0 0 0 16.76 4H7.24a2 2 0 0 0-1.79 1.11z"/>
+                  </svg>
+                </div>
+              </div>
+              <div id="stat-total-units" class="stat-value">0</div>
+              <div class="stat-footer">
+                <span>Available in showroom & store</span>
+              </div>
+            </div>
+
+            <!-- 3. Low Stock Products -->
+            <div class="stat-card">
+              <div class="stat-card-header">
+                <span class="stat-label">Low Stock Items</span>
+                <div class="stat-icon amber">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/>
+                    <line x1="12" y1="9" x2="12" y2="13"/>
+                    <line x1="12" y1="17" x2="12.01" y2="17"/>
+                  </svg>
+                </div>
+              </div>
+              <div id="stat-low-stock" class="stat-value">0</div>
+              <div class="stat-footer">
+                <span class="stat-tag warning">At or below threshold</span>
+              </div>
+            </div>
+
+            <!-- 4. Out of Stock -->
+            <div class="stat-card">
+              <div class="stat-card-header">
+                <span class="stat-label">Out of Stock</span>
+                <div class="stat-icon red">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <circle cx="12" cy="12" r="10"/>
+                    <line x1="15" y1="9" x2="9" y2="15"/>
+                    <line x1="9" y1="9" x2="15" y2="15"/>
+                  </svg>
+                </div>
+              </div>
+              <div id="stat-out-of-stock" class="stat-value">0</div>
+              <div class="stat-footer">
+                <span class="stat-tag danger">Zero inventory available</span>
+              </div>
+            </div>
+
+            <!-- 5. Total Inventory Value -->
+            <div class="stat-card">
+              <div class="stat-card-header">
+                <span class="stat-label">Total Inventory Value</span>
+                <div class="stat-icon purple">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <line x1="12" y1="1" x2="12" y2="23"/>
+                    <path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/>
+                  </svg>
+                </div>
+              </div>
+              <div id="stat-inventory-value" class="stat-value">₦ 0.00</div>
+              <div class="stat-footer">
+                <span id="stat-inventory-cost" style="font-weight: 500;">Cost: ₦ 0.00</span>
+              </div>
+            </div>
+
+            <!-- 6. Total Sales Revenue -->
+            <div class="stat-card">
+              <div class="stat-card-header">
+                <span class="stat-label">Total Sales Revenue</span>
+                <div class="stat-icon green">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/>
+                    <polyline points="17 6 23 6 23 12"/>
+                  </svg>
+                </div>
+              </div>
+              <div id="stat-sales-revenue" class="stat-value">₦ 0.00</div>
+              <div class="stat-footer">
+                <span id="stat-sales-profit" class="stat-tag positive">Profit: ₦ 0.00</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Charts Row -->
+          <div class="dashboard-row">
+            <!-- Sales Chart Card -->
+            <div class="card">
+              <div class="card-header">
+                <div>
+                  <div class="card-title">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#10b981" stroke-width="2">
+                      <polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/>
+                      <polyline points="17 6 23 6 23 12"/>
+                    </svg>
+                    <span>Sales Performance</span>
+                  </div>
+                  <div class="card-subtitle">Daily revenue and estimated gross profit trends</div>
+                </div>
+                <div class="btn-group">
+                  <button class="btn-group-item active" data-sales-range="7">7 Days</button>
+                  <button class="btn-group-item" data-sales-range="14">14 Days</button>
+                  <button class="btn-group-item" data-sales-range="30">30 Days</button>
+                </div>
+              </div>
+              <div class="card-body">
+                <div id="dashboard-sales-chart"></div>
+              </div>
+            </div>
+
+            <!-- Category Overview Doughnut -->
+            <div class="card">
+              <div class="card-header">
+                <div>
+                  <div class="card-title">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#3b82f6" stroke-width="2">
+                      <circle cx="12" cy="12" r="10"/>
+                      <path d="M12 2a10 10 0 0 1 10 10h-10z"/>
+                    </svg>
+                    <span>Inventory by Category</span>
+                  </div>
+                  <div class="card-subtitle">Distribution of stock units and valuation</div>
+                </div>
+              </div>
+              <div class="card-body">
+                <div id="dashboard-category-chart"></div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Operational Tables Row -->
+          <div class="dashboard-row">
+            <!-- Recent Sales Activity -->
+            <div class="card">
+              <div class="card-header">
+                <div>
+                  <div class="card-title">Recent Sales Activity</div>
+                  <div class="card-subtitle">Latest recorded customer transactions</div>
+                </div>
+                <button class="btn btn-secondary btn-sm" id="btn-dashboard-view-all-sales">View All Sales &rarr;</button>
+              </div>
+              <div class="card-body p-0">
+                <div class="table-responsive">
+                  <table class="data-table">
+                    <thead>
+                      <tr>
+                        <th>Receipt #</th>
+                        <th>Product</th>
+                        <th>Qty</th>
+                        <th>Total Amount</th>
+                        <th>Payment</th>
+                        <th>Date</th>
+                      </tr>
+                    </thead>
+                    <tbody id="dashboard-recent-sales-tbody">
+                      <!-- Rendered dynamically -->
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+
+            <!-- Low Stock & Out of Stock Alerts -->
+            <div class="card">
+              <div class="card-header">
+                <div>
+                  <div class="card-title">Stock Restock Alerts</div>
+                  <div class="card-subtitle">Items requiring supplier restocking</div>
+                </div>
+                <button class="btn btn-secondary btn-sm" id="btn-dashboard-view-all-alerts">View Alerts &rarr;</button>
+              </div>
+              <div class="card-body p-0">
+                <div id="dashboard-alerts-list">
+                  <!-- Rendered dynamically -->
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Row 3: Recently Added Products & Top Selling Gadgets -->
+          <div class="dashboard-row equal">
+            <!-- Top Selling Gadgets -->
+            <div class="card">
+              <div class="card-header">
+                <div>
+                  <div class="card-title">Top-Selling Gadgets</div>
+                  <div class="card-subtitle">Highest volume and revenue generators</div>
+                </div>
+              </div>
+              <div class="card-body p-0">
+                <div class="table-responsive">
+                  <table class="data-table">
+                    <thead>
+                      <tr>
+                        <th>Product</th>
+                        <th>Units Sold</th>
+                        <th>Revenue</th>
+                      </tr>
+                    </thead>
+                    <tbody id="dashboard-top-selling-tbody">
+                      <!-- Rendered dynamically -->
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+
+            <!-- Recently Added Products -->
+            <div class="card">
+              <div class="card-header">
+                <div>
+                  <div class="card-title">Recently Added Products</div>
+                  <div class="card-subtitle">New inventory catalog items</div>
+                </div>
+              </div>
+              <div class="card-body p-0">
+                <div class="table-responsive">
+                  <table class="data-table">
+                    <thead>
+                      <tr>
+                        <th>Product</th>
+                        <th>Category</th>
+                        <th>Selling Price</th>
+                        <th>Stock</th>
+                      </tr>
+                    </thead>
+                    <tbody id="dashboard-recently-added-tbody">
+                      <!-- Rendered dynamically -->
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- SECTION 2: INVENTORY MANAGEMENT -->
+        <section id="tab-inventory" class="tab-section">
+          <!-- Page Header & Main Controls -->
+          <div class="filter-bar">
+            <div class="filter-group">
+              <!-- Search Bar -->
+              <div class="search-bar" style="width: 260px;">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <circle cx="11" cy="11" r="8"/>
+                  <line x1="21" y1="21" x2="16.65" y2="16.65"/>
+                </svg>
+                <input type="text" id="inventory-search" placeholder="Search product, SKU, model...">
+              </div>
+
+              <!-- Category Filter -->
+              <select id="inventory-filter-category" class="filter-select">
+                <option value="All">All Categories</option>
+              </select>
+
+              <!-- Brand Filter -->
+              <select id="inventory-filter-brand" class="filter-select">
+                <option value="All">All Brands</option>
+              </select>
+
+              <!-- Stock Status Filter -->
+              <select id="inventory-filter-status" class="filter-select">
+                <option value="All">All Stock Statuses</option>
+                <option value="IN_STOCK">In Stock</option>
+                <option value="LOW_STOCK">Low Stock</option>
+                <option value="OUT_OF_STOCK">Out of Stock</option>
+              </select>
+
+              <!-- Sort Option -->
+              <select id="inventory-sort-by" class="filter-select">
+                <option value="name_asc">Name (A–Z)</option>
+                <option value="name_desc">Name (Z–A)</option>
+                <option value="price_desc">Price: High to Low</option>
+                <option value="price_asc">Price: Low to High</option>
+                <option value="qty_desc">Stock: High to Low</option>
+                <option value="qty_asc">Stock: Low to High</option>
+                <option value="date_desc" selected>Date Added: Newest</option>
+                <option value="date_asc">Date Added: Oldest</option>
+              </select>
+            </div>
+
+            <div class="filter-group">
+              <!-- View Toggle (Table vs Grid) -->
+              <div class="btn-group">
+                <button id="view-mode-table" class="btn-group-item active" title="Table View">
+                  <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <line x1="8" y1="6" x2="21" y2="6"/>
+                    <line x1="8" y1="12" x2="21" y2="12"/>
+                    <line x1="8" y1="18" x2="21" y2="18"/>
+                    <line x1="3" y1="6" x2="3.01" y2="6"/>
+                    <line x1="3" y1="12" x2="3.01" y2="12"/>
+                    <line x1="3" y1="18" x2="3.01" y2="18"/>
+                  </svg>
+                </button>
+                <button id="view-mode-grid" class="btn-group-item" title="Grid View">
+                  <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <rect x="3" y="3" width="7" height="7"/>
+                    <rect x="14" y="3" width="7" height="7"/>
+                    <rect x="14" y="14" width="7" height="7"/>
+                    <rect x="3" y="14" width="7" height="7"/>
+                  </svg>
+                </button>
+              </div>
+
+              <!-- Export CSV -->
+              <button id="btn-export-inventory-csv" class="btn btn-secondary btn-sm" title="Export to CSV spreadsheet">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+                  <polyline points="7 10 12 15 17 10"/>
+                  <line x1="12" y1="15" x2="12" y2="3"/>
+                </svg>
+                <span>Export CSV</span>
+              </button>
+
+              <!-- Add Product Button -->
+              <button id="btn-inventory-add-product" class="btn btn-primary btn-sm">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <line x1="12" y1="5" x2="12" y2="19"/>
+                  <line x1="5" y1="12" x2="19" y2="12"/>
+                </svg>
+                <span>Add Product</span>
+              </button>
+            </div>
+          </div>
+
+          <!-- Product Stats Summary Pill -->
+          <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:14px;font-size:12.5px;color:#64748b;padding:0 2px;">
+            <div>Showing <strong id="inventory-filtered-count" style="color:#0f172a;">0</strong> products</div>
+            <div>Total Stock Value (Retail): <strong id="inventory-filtered-value" style="color:#10b981;">₦ 0.00</strong></div>
+          </div>
+
+          <!-- Table View Container -->
+          <div id="inventory-table-container" class="card">
+            <div class="card-body p-0">
+              <div class="table-responsive">
+                <table class="data-table">
+                  <thead>
+                    <tr>
+                      <th>Product</th>
+                      <th>Category</th>
+                      <th>SKU / Model</th>
+                      <th>Cost Price</th>
+                      <th>Selling Price</th>
+                      <th>Quantity</th>
+                      <th>Status</th>
+                      <th>Supplier</th>
+                      <th style="text-align: right;">Actions</th>
+                    </tr>
+                  </thead>
+                  <tbody id="inventory-products-tbody">
+                    <!-- Products rows injected here -->
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+
+          <!-- Grid View Container -->
+          <div id="inventory-grid-container" class="products-grid" style="display: none;">
+            <!-- Product cards injected here -->
+          </div>
+        </section>
+
+        <!-- SECTION 3: STOCK TRACKING & ADJUSTMENTS -->
+        <section id="tab-stock" class="tab-section">
+          <div class="card" style="margin-bottom: 24px;">
+            <div class="card-header">
+              <div>
+                <div class="card-title">
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#10b981" stroke-width="2">
+                    <polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/>
+                    <polyline points="17 6 23 6 23 12"/>
+                  </svg>
+                  <span>Stock Management & Inventory Adjustments</span>
+                </div>
+                <div class="card-subtitle">Manage inflows, incoming shipments, damage audits, and customer returns</div>
+              </div>
+              <div style="display: flex; gap: 8px;">
+                <button id="btn-export-movements-csv" class="btn btn-secondary btn-sm">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+                    <polyline points="7 10 12 15 17 10"/>
+                    <line x1="12" y1="15" x2="12" y2="3"/>
+                  </svg>
+                  <span>Export History CSV</span>
+                </button>
+                <button id="btn-open-stock-adjustment-modal" class="btn btn-primary btn-sm">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <line x1="12" y1="5" x2="12" y2="19"/>
+                    <line x1="5" y1="12" x2="19" y2="12"/>
+                  </svg>
+                  <span>Record Stock Adjustment</span>
+                </button>
+              </div>
+            </div>
+            <div class="card-body">
+              <!-- Filter Bar for Movements -->
+              <div class="filter-bar" style="margin-bottom: 0;">
+                <div class="filter-group">
+                  <div class="search-bar" style="width: 260px;">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                      <circle cx="11" cy="11" r="8"/>
+                      <line x1="21" y1="21" x2="16.65" y2="16.65"/>
+                    </svg>
+                    <input type="text" id="stock-search" placeholder="Search by product, SKU, note...">
+                  </div>
+
+                  <select id="stock-filter-type" class="filter-select">
+                    <option value="All">All Movement Types</option>
+                    <option value="Incoming Restock">Incoming Restock</option>
+                    <option value="Sale">Sale (Outflow)</option>
+                    <option value="Customer Return">Customer Return</option>
+                    <option value="Damaged">Damaged</option>
+                    <option value="Manual Adjustment">Manual Adjustment</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Stock Movement Records Table -->
+          <div class="card">
+            <div class="card-header">
+              <div class="card-title">Stock Movement Audit Trail</div>
+              <span id="stock-movement-count" class="badge badge-neutral">0 records</span>
+            </div>
+            <div class="card-body p-0">
+              <div class="table-responsive">
+                <table class="data-table">
+                  <thead>
+                    <tr>
+                      <th>Ref ID</th>
+                      <th>Date & Time</th>
+                      <th>Product</th>
+                      <th>Movement Type</th>
+                      <th>Previous Qty</th>
+                      <th>Qty Changed</th>
+                      <th>New Qty</th>
+                      <th>Reason / Notes</th>
+                    </tr>
+                  </thead>
+                  <tbody id="stock-movements-tbody">
+                    <!-- Rows dynamically generated -->
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- SECTION 4: SALES MANAGEMENT -->
+        <section id="tab-sales" class="tab-section">
+          <!-- Sales Metric Highlight Banner -->
+          <div class="stats-grid" style="margin-bottom: 20px;">
+            <div class="stat-card">
+              <div class="stat-card-header">
+                <span class="stat-label">Total Transactions</span>
+                <div class="stat-icon blue">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <rect x="2" y="4" width="20" height="16" rx="2"/>
+                    <line x1="6" y1="8" x2="18" y2="8"/>
+                    <line x1="6" y1="12" x2="14" y2="12"/>
+                  </svg>
+                </div>
+              </div>
+              <div id="sales-stat-count" class="stat-value">0</div>
+              <div class="stat-footer"><span>Completed receipts</span></div>
+            </div>
+
+            <div class="stat-card">
+              <div class="stat-card-header">
+                <span class="stat-label">Total Revenue</span>
+                <div class="stat-icon green">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <line x1="12" y1="1" x2="12" y2="23"/>
+                    <path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/>
+                  </svg>
+                </div>
+              </div>
+              <div id="sales-stat-revenue" class="stat-value">₦ 0.00</div>
+              <div class="stat-footer"><span>Gross sales receipts</span></div>
+            </div>
+
+            <div class="stat-card">
+              <div class="stat-card-header">
+                <span class="stat-label">Estimated Gross Profit</span>
+                <div class="stat-icon green">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/>
+                    <polyline points="17 6 23 6 23 12"/>
+                  </svg>
+                </div>
+              </div>
+              <div id="sales-stat-profit" class="stat-value">₦ 0.00</div>
+              <div class="stat-footer"><span class="stat-tag positive" id="sales-stat-margin">Margin: 0%</span></div>
+            </div>
+
+            <div class="stat-card">
+              <div class="stat-card-header">
+                <span class="stat-label">Avg Transaction Value</span>
+                <div class="stat-icon purple">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <circle cx="12" cy="12" r="10"/>
+                    <path d="M16 8h-6a2 2 0 1 0 0 4h4a2 2 0 1 1 0 4H8"/>
+                  </svg>
+                </div>
+              </div>
+              <div id="sales-stat-avg" class="stat-value">₦ 0.00</div>
+              <div class="stat-footer"><span>Per completed sale</span></div>
+            </div>
+          </div>
+
+          <!-- Sales Filter & Action Bar -->
+          <div class="filter-bar">
+            <div class="filter-group">
+              <div class="search-bar" style="width: 260px;">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <circle cx="11" cy="11" r="8"/>
+                  <line x1="21" y1="21" x2="16.65" y2="16.65"/>
+                </svg>
+                <input type="text" id="sales-search" placeholder="Search receipt #, customer, product...">
+              </div>
+
+              <select id="sales-filter-payment" class="filter-select">
+                <option value="All">All Payment Methods</option>
+                <option value="Cash">Cash</option>
+                <option value="Bank Transfer">Bank Transfer</option>
+                <option value="POS">POS</option>
+                <option value="Other">Other</option>
+              </select>
+
+              <select id="sales-filter-status" class="filter-select">
+                <option value="All">All Statuses</option>
+                <option value="Completed">Completed</option>
+                <option value="Cancelled">Cancelled</option>
+              </select>
+            </div>
+
+            <div class="filter-group">
+              <button id="btn-export-sales-csv" class="btn btn-secondary btn-sm">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+                  <polyline points="7 10 12 15 17 10"/>
+                  <line x1="12" y1="15" x2="12" y2="3"/>
+                </svg>
+                <span>Export Sales CSV</span>
+              </button>
+
+              <button id="btn-sales-record-modal" class="btn btn-primary btn-sm">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <line x1="12" y1="5" x2="12" y2="19"/>
+                  <line x1="5" y1="12" x2="19" y2="12"/>
+                </svg>
+                <span>Record New Sale</span>
+              </button>
+            </div>
+          </div>
+
+          <!-- Sales Transaction Records -->
+          <div class="card">
+            <div class="card-body p-0">
+              <div class="table-responsive">
+                <table class="data-table">
+                  <thead>
+                    <tr>
+                      <th>Receipt #</th>
+                      <th>Date & Time</th>
+                      <th>Product</th>
+                      <th>Qty</th>
+                      <th>Unit Price</th>
+                      <th>Discount</th>
+                      <th>Total Amount</th>
+                      <th>Profit</th>
+                      <th>Payment</th>
+                      <th>Customer</th>
+                      <th>Status</th>
+                      <th style="text-align: right;">Actions</th>
+                    </tr>
+                  </thead>
+                  <tbody id="sales-transactions-tbody">
+                    <!-- Sales rows dynamically generated -->
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- SECTION 5: LOW STOCK & RESTOCK ALERTS -->
+        <section id="tab-alerts" class="tab-section">
+          <div class="card" style="margin-bottom: 20px;">
+            <div class="card-header">
+              <div>
+                <div class="card-title">
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#ef4444" stroke-width="2">
+                    <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/>
+                    <line x1="12" y1="9" x2="12" y2="13"/>
+                    <line x1="12" y1="17" x2="12.01" y2="17"/>
+                  </svg>
+                  <span>Inventory Restock & Replenishment Monitor</span>
+                </div>
+                <div class="card-subtitle">Identifies gadget items at or below minimum stock thresholds</div>
+              </div>
+              <div class="btn-group">
+                <button class="btn-group-item active" data-alert-filter="ALL">All Alerts</button>
+                <button class="btn-group-item" data-alert-filter="OUT_OF_STOCK">Out of Stock</button>
+                <button class="btn-group-item" data-alert-filter="CRITICAL">Critical Stock</button>
+                <button class="btn-group-item" data-alert-filter="LOW_STOCK">Low Stock</button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Alerts List Container -->
+          <div class="card">
+            <div class="card-body p-0">
+              <div class="table-responsive">
+                <table class="data-table">
+                  <thead>
+                    <tr>
+                      <th>Product</th>
+                      <th>Category</th>
+                      <th>Current Stock</th>
+                      <th>Minimum Stock</th>
+                      <th>Suggested Restock</th>
+                      <th>Status Indicator</th>
+                      <th>Primary Supplier</th>
+                      <th style="text-align: right;">Action</th>
+                    </tr>
+                  </thead>
+                  <tbody id="alerts-tbody">
+                    <!-- Dynamic Alerts Rows -->
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- SECTION 6: SUPPLIER MANAGEMENT -->
+        <section id="tab-suppliers" class="tab-section">
+          <div class="filter-bar">
+            <div class="filter-group">
+              <div class="search-bar" style="width: 260px;">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <circle cx="11" cy="11" r="8"/>
+                  <line x1="21" y1="21" x2="16.65" y2="16.65"/>
+                </svg>
+                <input type="text" id="suppliers-search" placeholder="Search supplier name, phone, email...">
+              </div>
+            </div>
+
+            <div>
+              <button id="btn-add-supplier-modal" class="btn btn-primary btn-sm">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <line x1="12" y1="5" x2="12" y2="19"/>
+                  <line x1="5" y1="12" x2="19" y2="12"/>
+                </svg>
+                <span>Add New Supplier</span>
+              </button>
+            </div>
+          </div>
+
+          <div class="card">
+            <div class="card-body p-0">
+              <div class="table-responsive">
+                <table class="data-table">
+                  <thead>
+                    <tr>
+                      <th>Supplier / Contact</th>
+                      <th>Business Name</th>
+                      <th>Phone Number</th>
+                      <th>Email Address</th>
+                      <th>Address</th>
+                      <th>Supplied Products</th>
+                      <th style="text-align: right;">Actions</th>
+                    </tr>
+                  </thead>
+                  <tbody id="suppliers-tbody">
+                    <!-- Dynamic supplier rows -->
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- SECTION 7: REPORTS & ANALYTICS -->
+        <section id="tab-reports" class="tab-section">
+          <!-- Report Filter Toolbar -->
+          <div class="filter-bar">
+            <div class="filter-group">
+              <label style="font-size: 13px; font-weight: 600; color: #475569;">Time Period:</label>
+              <select id="reports-timeframe" class="filter-select">
+                <option value="today">Today</option>
+                <option value="7days">Last 7 Days</option>
+                <option value="30days" selected>Last 30 Days</option>
+                <option value="thisMonth">This Month</option>
+                <option value="all">All Time</option>
+              </select>
+
+              <label style="font-size: 13px; font-weight: 600; color: #475569; margin-left: 8px;">Category:</label>
+              <select id="reports-category" class="filter-select">
+                <option value="All">All Categories</option>
+              </select>
+            </div>
+
+            <div class="filter-group">
+              <button id="btn-reports-export-inventory" class="btn btn-secondary btn-sm">Export Inventory CSV</button>
+              <button id="btn-reports-export-sales" class="btn btn-secondary btn-sm">Export Sales CSV</button>
+              <button id="btn-reports-export-movements" class="btn btn-secondary btn-sm">Export Movements CSV</button>
+            </div>
+          </div>
+
+          <!-- Reports KPI Highlights -->
+          <div class="stats-grid">
+            <div class="stat-card">
+              <div class="stat-card-header">
+                <span class="stat-label">Period Sales Revenue</span>
+                <div class="stat-icon green">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <line x1="12" y1="1" x2="12" y2="23"/>
+                    <path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/>
+                  </svg>
+                </div>
+              </div>
+              <div id="report-stat-revenue" class="stat-value">₦ 0.00</div>
+              <div class="stat-footer"><span id="report-stat-transactions">0 transactions</span></div>
+            </div>
+
+            <div class="stat-card">
+              <div class="stat-card-header">
+                <span class="stat-label">Estimated Gross Profit</span>
+                <div class="stat-icon green">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/>
+                    <polyline points="17 6 23 6 23 12"/>
+                  </svg>
+                </div>
+              </div>
+              <div id="report-stat-profit" class="stat-value">₦ 0.00</div>
+              <div class="stat-footer"><span class="stat-tag positive" id="report-stat-margin">Margin: 0%</span></div>
+            </div>
+
+            <div class="stat-card">
+              <div class="stat-card-header">
+                <span class="stat-label">Current Stock Valuation (Retail)</span>
+                <div class="stat-icon purple">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <rect x="2" y="7" width="20" height="14" rx="2" ry="2"/>
+                    <path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/>
+                  </svg>
+                </div>
+              </div>
+              <div id="report-stat-inventory-retail" class="stat-value">₦ 0.00</div>
+              <div class="stat-footer"><span id="report-stat-inventory-cost">Cost basis: ₦ 0.00</span></div>
+            </div>
+
+            <div class="stat-card">
+              <div class="stat-card-header">
+                <span class="stat-label">Unrealized Inventory Profit</span>
+                <div class="stat-icon blue">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/>
+                    <polyline points="17 6 23 6 23 12"/>
+                  </svg>
+                </div>
+              </div>
+              <div id="report-stat-unrealized-profit" class="stat-value">₦ 0.00</div>
+              <div class="stat-footer"><span>Potential profit on shelf</span></div>
+            </div>
+          </div>
+
+          <!-- Best-Selling and Slow-Moving Tables -->
+          <div class="dashboard-row equal">
+            <div class="card">
+              <div class="card-header">
+                <div>
+                  <div class="card-title">Best-Selling Gadgets</div>
+                  <div class="card-subtitle">Ranked by units sold during this period</div>
+                </div>
+              </div>
+              <div class="card-body p-0">
+                <div class="table-responsive">
+                  <table class="data-table">
+                    <thead>
+                      <tr>
+                        <th>Product</th>
+                        <th>Units Sold</th>
+                        <th>Revenue</th>
+                      </tr>
+                    </thead>
+                    <tbody id="reports-best-selling-tbody">
+                      <!-- Dynamic rows -->
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+
+            <div class="card">
+              <div class="card-header">
+                <div>
+                  <div class="card-title">Slow-Moving & Zero-Sale Gadgets</div>
+                  <div class="card-subtitle">Products with no recorded sales in this period</div>
+                </div>
+              </div>
+              <div class="card-body p-0">
+                <div class="table-responsive">
+                  <table class="data-table">
+                    <thead>
+                      <tr>
+                        <th>Product</th>
+                        <th>Stock On Hand</th>
+                        <th>Valuation</th>
+                      </tr>
+                    </thead>
+                    <tbody id="reports-slow-moving-tbody">
+                      <!-- Dynamic rows -->
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- SECTION 8: SETTINGS & BACKUP/RESTORE -->
+        <section id="tab-settings" class="tab-section">
+          <div class="dashboard-row equal">
+            <!-- Store Profile Customization -->
+            <div class="card">
+              <div class="card-header">
+                <div>
+                  <div class="card-title">Store Profile & Currency</div>
+                  <div class="card-subtitle">Customize vendor store details and receipt headers</div>
+                </div>
+              </div>
+              <div class="card-body">
+                <form id="settings-form">
+                  <div class="form-grid single">
+                    <div class="form-group">
+                      <label class="form-label">Store / Business Name</label>
+                      <input type="text" id="settings-store-name" class="form-control" required>
+                    </div>
+
+                    <div class="form-group">
+                      <label class="form-label">Store Tagline</label>
+                      <input type="text" id="settings-store-tagline" class="form-control">
+                    </div>
+
+                    <div class="form-group">
+                      <label class="form-label">Phone Number</label>
+                      <input type="text" id="settings-store-phone" class="form-control">
+                    </div>
+
+                    <div class="form-group">
+                      <label class="form-label">Email Address</label>
+                      <input type="email" id="settings-store-email" class="form-control">
+                    </div>
+
+                    <div class="form-group">
+                      <label class="form-label">Physical Shop Address</label>
+                      <textarea id="settings-store-address" class="form-control" rows="2"></textarea>
+                    </div>
+
+                    <div class="form-grid">
+                      <div class="form-group">
+                        <label class="form-label">Currency</label>
+                        <select id="settings-currency" class="form-control">
+                          <option value="NGN">NGN (₦) – Nigerian Naira</option>
+                          <option value="USD">USD ($) – US Dollar</option>
+                          <option value="GBP">GBP (£) – British Pound</option>
+                          <option value="EUR">EUR (€) – Euro</option>
+                        </select>
+                      </div>
+
+                      <div class="form-group">
+                        <label class="form-label">Default Low Stock Alert Threshold</label>
+                        <input type="number" id="settings-low-stock-threshold" class="form-control" min="1" max="100">
+                      </div>
+                    </div>
+
+                    <div class="form-group">
+                      <label class="form-label">Receipt Footer Message</label>
+                      <textarea id="settings-receipt-footer" class="form-control" rows="2"></textarea>
+                    </div>
+
+                    <div style="margin-top: 10px;">
+                      <button type="submit" class="btn btn-primary">Save Settings</button>
+                    </div>
+                  </div>
+                </form>
+              </div>
+            </div>
+
+            <!-- Data Backup, Restore & Demo Reset -->
+            <div class="card">
+              <div class="card-header">
+                <div>
+                  <div class="card-title">Data Storage & Backup</div>
+                  <div class="card-subtitle">Manage browser persistence, JSON backups and demo data</div>
+                </div>
+              </div>
+              <div class="card-body" style="display: flex; flex-direction: column; gap: 20px;">
+                <div style="background-color: #f8fafc; border: 1px solid #e2e8f0; border-radius: 10px; padding: 16px;">
+                  <h4 style="font-size: 14px; font-weight: 600; color: #0f172a; margin-bottom: 4px;">Export Application Backup</h4>
+                  <p style="font-size: 12.5px; color: #64748b; margin-bottom: 12px;">Download all products, sales records, stock movements and suppliers as a secure JSON backup file.</p>
+                  <button id="btn-export-backup" class="btn btn-secondary btn-sm">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                      <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+                      <polyline points="7 10 12 15 17 10"/>
+                      <line x1="12" y1="15" x2="12" y2="3"/>
+                    </svg>
+                    <span>Download JSON Backup</span>
+                  </button>
+                </div>
+
+                <div style="background-color: #f8fafc; border: 1px solid #e2e8f0; border-radius: 10px; padding: 16px;">
+                  <h4 style="font-size: 14px; font-weight: 600; color: #0f172a; margin-bottom: 4px;">Restore From Backup</h4>
+                  <p style="font-size: 12.5px; color: #64748b; margin-bottom: 12px;">Select a previously exported StockPilot JSON file to restore your inventory and sales data.</p>
+                  <input type="file" id="backup-file-input" accept=".json" style="display: none;">
+                  <button id="btn-import-backup" class="btn btn-secondary btn-sm">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                      <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+                      <polyline points="17 8 12 3 7 8"/>
+                      <line x1="12" y1="3" x2="12" y2="15"/>
+                    </svg>
+                    <span>Select & Restore JSON Backup</span>
+                  </button>
+                </div>
+
+                <div style="background-color: #fffbeb; border: 1px solid #fde68a; border-radius: 10px; padding: 16px;">
+                  <h4 style="font-size: 14px; font-weight: 600; color: #92400e; margin-bottom: 4px;">Reset Demo Data</h4>
+                  <p style="font-size: 12.5px; color: #b45309; margin-bottom: 12px;">Replaces current items with realistic gadget inventory, suppliers, and sample sales history.</p>
+                  <button id="btn-reset-demo" class="btn btn-secondary btn-sm" style="border-color: #f59e0b; color: #92400e;">
+                    Reset to Realistic Demo Data
+                  </button>
+                </div>
+
+                <div style="background-color: #fef2f2; border: 1px solid #fecaca; border-radius: 10px; padding: 16px;">
+                  <h4 style="font-size: 14px; font-weight: 600; color: #991b1b; margin-bottom: 4px;">Clean Wipe Inventory</h4>
+                  <p style="font-size: 12.5px; color: #b91c1c; margin-bottom: 12px;">Erase all inventory products, sales, and movement logs to start with a brand new clean shop.</p>
+                  <button id="btn-clear-all" class="btn btn-danger btn-sm">
+                    Wipe & Clear All Data
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+      </main>
+    </div>
+  </div>
+
+  <!-- ================= MODALS ================= -->
+
+  <!-- 1. Add / Edit Product Modal -->
+  <div id="modal-product" class="modal-overlay">
+    <div class="modal-window lg">
+      <div class="modal-header">
+        <h3 id="modal-product-title" class="modal-title">Add New Gadget Product</h3>
+        <button class="modal-close" data-modal-close>&times;</button>
+      </div>
+      <form id="product-form">
+        <div class="modal-body">
+          <input type="hidden" id="product-form-id">
+          
+          <div class="form-grid">
+            <!-- Product Name -->
+            <div class="form-group col-span-2">
+              <label class="form-label">Product Name *</label>
+              <input type="text" id="product-form-name" class="form-control" placeholder="e.g. iPhone 15 Pro (128GB, Natural Titanium)" required>
+            </div>
+
+            <!-- Category -->
+            <div class="form-group">
+              <label class="form-label">Category *</label>
+              <select id="product-form-category" class="form-control" required></select>
+            </div>
+
+            <!-- Brand -->
+            <div class="form-group">
+              <label class="form-label">Brand *</label>
+              <input type="text" id="product-form-brand" class="form-control" placeholder="e.g. Apple, Samsung, Anker" required>
+            </div>
+
+            <!-- Model -->
+            <div class="form-group">
+              <label class="form-label">Model / Variant</label>
+              <input type="text" id="product-form-model" class="form-control" placeholder="e.g. A2848, SM-S928B">
+            </div>
+
+            <!-- SKU / Product Code -->
+            <div class="form-group">
+              <label class="form-label">SKU / Barcode Code *</label>
+              <input type="text" id="product-form-sku" class="form-control" placeholder="e.g. APL-IP15P-128" required>
+            </div>
+
+            <!-- IMEI / Serial Number -->
+            <div class="form-group col-span-2">
+              <label class="form-label">IMEI / Serial Number <span class="optional">(Optional for phones & laptops)</span></label>
+              <input type="text" id="product-form-imei" class="form-control" placeholder="e.g. 356984112345671">
+            </div>
+
+            <!-- Purchase Price -->
+            <div class="form-group">
+              <label class="form-label">Purchase / Cost Price *</label>
+              <input type="number" id="product-form-purchase-price" class="form-control" step="any" min="0" placeholder="0.00" required>
+            </div>
+
+            <!-- Selling Price -->
+            <div class="form-group">
+              <label class="form-label">Selling Price *</label>
+              <input type="number" id="product-form-selling-price" class="form-control" step="any" min="0" placeholder="0.00" required>
+            </div>
+
+            <!-- Quantity in Stock -->
+            <div class="form-group">
+              <label class="form-label">Quantity in Stock *</label>
+              <input type="number" id="product-form-quantity" class="form-control" min="0" placeholder="0" required>
+            </div>
+
+            <!-- Minimum Stock Level -->
+            <div class="form-group">
+              <label class="form-label">Minimum Stock Alert Level *</label>
+              <input type="number" id="product-form-min-stock" class="form-control" min="0" placeholder="5" required>
+            </div>
+
+            <!-- Supplier -->
+            <div class="form-group col-span-2">
+              <label class="form-label">Supplier Name</label>
+              <select id="product-form-supplier" class="form-control">
+                <option value="">Select or leave blank</option>
+              </select>
+            </div>
+
+            <!-- Product Description -->
+            <div class="form-group col-span-2">
+              <label class="form-label">Description / Specifications</label>
+              <textarea id="product-form-description" class="form-control" placeholder="Technical specifications, condition, warranty terms, accessories included..."></textarea>
+            </div>
+
+            <!-- Image Upload & Preview -->
+            <div class="form-group col-span-2">
+              <label class="form-label">Product Image</label>
+              <div class="image-upload-wrapper">
+                <div class="image-preview-box">
+                  <img id="product-form-image-preview" src="" alt="Gadget Preview">
+                </div>
+                <div class="image-upload-content">
+                  <input type="file" id="product-form-image-file" accept="image/*" style="font-size: 12.5px;">
+                  <div style="font-size: 11.5px; color: #94a3b8; margin-top: 4px;">PNG, JPG, WebP supported. If none uploaded, an automatic vector gadget graphic is assigned.</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-modal-close>Cancel</button>
+          <button type="submit" class="btn btn-primary" id="btn-save-product">Save Product</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- 2. Product Detail Modal -->
+  <div id="modal-product-detail" class="modal-overlay">
+    <div class="modal-window">
+      <div class="modal-header">
+        <h3 class="modal-title">Gadget Details</h3>
+        <button class="modal-close" data-modal-close>&times;</button>
+      </div>
+      <div class="modal-body">
+        <div id="product-detail-content"></div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-modal-close>Close</button>
+        <button type="button" class="btn btn-primary" id="btn-detail-edit">Edit Product</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- 3. Record Sale Modal -->
+  <div id="modal-sale" class="modal-overlay">
+    <div class="modal-window">
+      <div class="modal-header">
+        <h3 class="modal-title">Record a Sale</h3>
+        <button class="modal-close" data-modal-close>&times;</button>
+      </div>
+      <form id="sale-form">
+        <div class="modal-body">
+          <div class="form-grid">
+            <!-- Product Selector -->
+            <div class="form-group col-span-2">
+              <label class="form-label">Select Gadget Product *</label>
+              <select id="sale-form-product" class="form-control" required>
+                <option value="">-- Choose in-stock gadget --</option>
+              </select>
+            </div>
+
+            <!-- Available Stock Info Pill -->
+            <div class="form-group col-span-2" id="sale-stock-pill" style="display: none;">
+              <div style="padding: 8px 12px; border-radius: 8px; background-color: #ecfdf5; border: 1px solid #a7f3d0; display: flex; justify-content: space-between; font-size: 12.5px;">
+                <span style="color: #065f46;">Available Stock: <strong id="sale-stock-available">0</strong> units</span>
+                <span style="color: #065f46;">Unit Price: <strong id="sale-unit-price-display">₦ 0.00</strong></span>
+              </div>
+            </div>
+
+            <!-- Quantity Sold -->
+            <div class="form-group">
+              <label class="form-label">Quantity Sold *</label>
+              <input type="number" id="sale-form-quantity" class="form-control" min="1" value="1" required>
+            </div>
+
+            <!-- Unit Selling Price -->
+            <div class="form-group">
+              <label class="form-label">Selling Price Per Unit *</label>
+              <input type="number" id="sale-form-unit-price" class="form-control" step="any" min="0" required>
+            </div>
+
+            <!-- Discount -->
+            <div class="form-group">
+              <label class="form-label">Discount Amount <span class="optional">(Optional)</span></label>
+              <input type="number" id="sale-form-discount" class="form-control" step="any" min="0" value="0">
+            </div>
+
+            <!-- Payment Method -->
+            <div class="form-group">
+              <label class="form-label">Payment Method *</label>
+              <select id="sale-form-payment" class="form-control" required>
+                <option value="Cash">Cash</option>
+                <option value="Bank Transfer">Bank Transfer</option>
+                <option value="POS">POS (Debit Card)</option>
+                <option value="Other">Other</option>
+              </select>
+            </div>
+
+            <!-- Customer Name -->
+            <div class="form-group">
+              <label class="form-label">Customer Name <span class="optional">(Optional)</span></label>
+              <input type="text" id="sale-form-customer-name" class="form-control" placeholder="e.g. David Adeleke">
+            </div>
+
+            <!-- Customer Phone -->
+            <div class="form-group">
+              <label class="form-label">Customer Phone <span class="optional">(Optional)</span></label>
+              <input type="text" id="sale-form-customer-phone" class="form-control" placeholder="e.g. +234 803 000 0000">
+            </div>
+
+            <!-- Calculation Box -->
+            <div class="form-group col-span-2">
+              <div class="sale-calc-box">
+                <div class="sale-calc-row">
+                  <span>Subtotal:</span>
+                  <strong id="sale-calc-subtotal">₦ 0.00</strong>
+                </div>
+                <div class="sale-calc-row">
+                  <span>Discount:</span>
+                  <span id="sale-calc-discount" style="color: #ef4444;">- ₦ 0.00</span>
+                </div>
+                <div class="sale-calc-row total">
+                  <span>Final Total to Pay:</span>
+                  <span id="sale-calc-total" style="color: #10b981;">₦ 0.00</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Sale Notes -->
+            <div class="form-group col-span-2">
+              <label class="form-label">Sale Notes / Serial No.</label>
+              <input type="text" id="sale-form-notes" class="form-control" placeholder="e.g. Free tempered glass included, 1-year warranty badge">
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-modal-close>Cancel</button>
+          <button type="submit" class="btn btn-primary" id="btn-complete-sale">Complete & Generate Receipt</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- 4. Stock Adjustment Modal -->
+  <div id="modal-stock-adjustment" class="modal-overlay">
+    <div class="modal-window">
+      <div class="modal-header">
+        <h3 class="modal-title">Record Stock Adjustment</h3>
+        <button class="modal-close" data-modal-close>&times;</button>
+      </div>
+      <form id="adjustment-form">
+        <div class="modal-body">
+          <div class="form-grid single">
+            <!-- Product -->
+            <div class="form-group">
+              <label class="form-label">Select Product *</label>
+              <select id="adj-form-product" class="form-control" required>
+                <option value="">-- Choose gadget product --</option>
+              </select>
+            </div>
+
+            <!-- Current Stock Display -->
+            <div class="form-group" id="adj-current-stock-box" style="display: none;">
+              <div style="padding: 10px 14px; border-radius: 8px; background-color: #f1f5f9; display: flex; justify-content: space-between; font-size: 13px;">
+                <span style="color: #475569;">Current Stock: <strong id="adj-current-stock" style="color: #0f172a;">0</strong> units</span>
+                <span style="color: #475569;">Min Stock Threshold: <strong id="adj-min-stock" style="color: #0f172a;">0</strong></span>
+              </div>
+            </div>
+
+            <!-- Movement Type -->
+            <div class="form-group">
+              <label class="form-label">Adjustment Type *</label>
+              <select id="adj-form-type" class="form-control" required>
+                <option value="Incoming Restock">Incoming Restock (Stock In +)</option>
+                <option value="Customer Return">Customer Return (Stock In +)</option>
+                <option value="Damaged">Damaged Product (Stock Out -)</option>
+                <option value="Manual Adjustment">Manual Audit Correction</option>
+              </select>
+            </div>
+
+            <!-- Quantity to Change -->
+            <div class="form-group">
+              <label class="form-label" id="adj-form-qty-label">Quantity to Add *</label>
+              <input type="number" id="adj-form-quantity" class="form-control" min="1" placeholder="1" required>
+            </div>
+
+            <!-- Resulting Quantity Preview -->
+            <div class="form-group">
+              <div style="padding: 10px 14px; border-radius: 8px; background-color: #ecfdf5; border: 1px solid #a7f3d0; font-size: 13px; color: #065f46;">
+                New Resulting Stock: <strong id="adj-resulting-stock">0</strong> units
+              </div>
+            </div>
+
+            <!-- Reason / Notes -->
+            <div class="form-group">
+              <label class="form-label">Reason / Notes *</label>
+              <textarea id="adj-form-reason" class="form-control" placeholder="e.g. Shipment received from supplier, screen broken in showroom display..." required></textarea>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-modal-close>Cancel</button>
+          <button type="submit" class="btn btn-primary" id="btn-save-adjustment">Apply Stock Adjustment</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- 5. Printable Sales Receipt Modal -->
+  <div id="modal-receipt" class="modal-overlay">
+    <div class="modal-window sm" id="printable-receipt-modal">
+      <div class="modal-header">
+        <h3 class="modal-title">Official Sales Receipt</h3>
+        <button class="modal-close" data-modal-close>&times;</button>
+      </div>
+      <div class="modal-body">
+        <div id="receipt-container" class="receipt-paper">
+          <!-- Dynamic receipt content rendered here -->
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-modal-close>Close</button>
+        <button type="button" class="btn btn-primary" id="btn-print-receipt">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <polyline points="6 9 6 2 18 2 18 9"/>
+            <path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/>
+            <rect x="6" y="14" width="12" height="8"/>
+          </svg>
+          <span>Print Receipt</span>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- 6. Supplier Modal -->
+  <div id="modal-supplier" class="modal-overlay">
+    <div class="modal-window">
+      <div class="modal-header">
+        <h3 id="modal-supplier-title" class="modal-title">Add Supplier</h3>
+        <button class="modal-close" data-modal-close>&times;</button>
+      </div>
+      <form id="supplier-form">
+        <div class="modal-body">
+          <input type="hidden" id="supplier-form-id">
+          <div class="form-grid single">
+            <div class="form-group">
+              <label class="form-label">Contact / Supplier Name *</label>
+              <input type="text" id="supplier-form-name" class="form-control" placeholder="e.g. Apex Mobile Distro Ltd" required>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label">Business / Registered Entity Name</label>
+              <input type="text" id="supplier-form-business" class="form-control" placeholder="e.g. Apex Distribution Nigeria RC123456">
+            </div>
+
+            <div class="form-group">
+              <label class="form-label">Phone Number *</label>
+              <input type="text" id="supplier-form-phone" class="form-control" placeholder="e.g. +234 802 334 9901" required>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label">Email Address</label>
+              <input type="email" id="supplier-form-email" class="form-control" placeholder="e.g. orders@apexdistro.ng">
+            </div>
+
+            <div class="form-group">
+              <label class="form-label">Office / Warehouse Address</label>
+              <textarea id="supplier-form-address" class="form-control" rows="2" placeholder="e.g. 14 Otigba St, Computer Village, Ikeja, Lagos"></textarea>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label">Notes / Supplies Hardware</label>
+              <textarea id="supplier-form-notes" class="form-control" rows="2" placeholder="e.g. Apple warranty agent, laptops importer"></textarea>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-modal-close>Cancel</button>
+          <button type="submit" class="btn btn-primary" id="btn-save-supplier">Save Supplier</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- 7. Accessible Confirmation Modal -->
+  <div id="modal-confirm" class="modal-overlay">
+    <div class="modal-window sm">
+      <div class="modal-header">
+        <h3 id="modal-confirm-title" class="modal-title">Confirm Action</h3>
+        <button class="modal-close" data-modal-close>&times;</button>
+      </div>
+      <div class="modal-body">
+        <p id="modal-confirm-message" style="font-size: 13.5px; color: #475569; line-height: 1.5;"></p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-modal-close id="modal-confirm-cancel">Cancel</button>
+        <button type="button" class="btn btn-danger" id="modal-confirm-proceed">Confirm</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Application Logic Scripts -->
+  <script src="js/data.js"></script>
+  <script src="js/store.js"></script>
+  <script src="js/charts.js"></script>
+  <script src="js/ui.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>
+
